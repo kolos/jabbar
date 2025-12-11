@@ -19,8 +19,10 @@ $(TARGET): $(OBJS)
 
 
 $(GIR): $(TARGET)
-	LD_LIBRARY_PATH=../../lib:$(LD_LIBRARY_PATH) g-ir-scanner src/jabbar-manager.c src/jabbar-manager.h \
+	ln -sf ../../lib/libjabra.so.1.12.2.0 libjabra.so.1
+	LD_LIBRARY_PATH=.:../../lib:$(LD_LIBRARY_PATH) g-ir-scanner src/jabbar-manager.c src/jabbar-manager.h \
 		--library=jabbar-gobject \
+		--extra-library=jabra \
 		--library-path=. \
 		--library-path=../../lib \
 		--include=GObject-2.0 \
