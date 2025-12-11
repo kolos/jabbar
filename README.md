@@ -12,11 +12,36 @@
 *   **Head Detection**: (Supported devices) Detects if you are wearing the headset.
 *   **Customizable**: Configure notification preferences and critical battery thresholds.
 
-## 🚀 Prerequisites
+## 🛠️ Installation
 
-Before installing, ensure you have the following dependencies:
+1.  **Download the latest release:**
+    Go to the [Releases page](https://github.com/kolos/jabbar/releases) and download `jabbar@kolos.zip`.
 
-*   **Cinnamon Desktop Environment**
+2.  **Install the Applet:**
+    Extract the zip file into your Cinnamon applets directory.
+    ```bash
+    mkdir -p ~/.local/share/cinnamon/applets/
+    unzip jabbar@kolos.zip -d ~/.local/share/cinnamon/applets/
+    ```
+
+3.  **Setup Device Permissions (Udev Rules):**
+    To allow the applet to communicate with the Jabra device without root privileges, you need to install the udev rules.
+    
+    ```bash
+    wget https://raw.githubusercontent.com/kolos/jabbar/master/udev/99-jabra.rules
+    sudo cp 99-jabra.rules /etc/udev/rules.d/
+    sudo udevadm control --reload-rules && sudo udevadm trigger
+    ```
+
+4.  **Enable the Applet:**
+    *   Right-click on your Cinnamon panel.
+    *   Select **Applets**.
+    *   Find **JabBar** in the list and click the **+** button to add it.
+
+## 🏗️ Build from Source
+
+If you prefer to build the project yourself, ensure you have the necessary build dependencies:
+
 *   **Build Tools**: `make`, `gcc`
 *   **GObject Introspection**: `libgirepository1.0-dev` (Debian/Ubuntu) or equivalent.
 *   **Patchelf**: Required to set the RPATH for the shared libraries.
@@ -25,8 +50,6 @@ Before installing, ensure you have the following dependencies:
 # Ubuntu/Debian
 sudo apt install build-essential libgirepository1.0-dev patchelf
 ```
-
-## 🛠️ Installation
 
 1.  **Clone the repository:**
     ```bash
@@ -41,23 +64,18 @@ sudo apt install build-essential libgirepository1.0-dev patchelf
     ```
 
 3.  **Install the Applet:**
-    Link or copy the applet to your local Cinnamon applets directory.
+    Link the applet to your local Cinnamon applets directory.
     ```bash
     mkdir -p ~/.local/share/cinnamon/applets/
     ln -s $(pwd)/src/applet ~/.local/share/cinnamon/applets/jabbar@kolos
     ```
 
-4.  **Setup Device Permissions (Udev Rules):**
-    To allow the applet to communicate with the Jabra device without root privileges, install the provided udev rules.
+4.  **Setup Device Permissions:**
+    Install the udev rules included in the repository.
     ```bash
     sudo cp udev/99-jabra.rules /etc/udev/rules.d/
     sudo udevadm control --reload-rules && sudo udevadm trigger
     ```
-
-5.  **Enable the Applet:**
-    *   Right-click on your Cinnamon panel.
-    *   Select **Applets**.
-    *   Find **JabBar** in the list and click the **+** button to add it.
 
 ## ⚙️ Configuration
 
