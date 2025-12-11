@@ -5,12 +5,17 @@
         "main": {
             "type": "page",
             "title": "Settings",
-            "sections": ["general"]
+            "sections": ["general", "icons"]
         },
         "general": {
             "type": "section",
             "title": "General",
-            "keys": ["enable-notifications", "critical-battery-level"]
+            "keys": ["enable-notifications", "enable-media-control", "critical-battery-level"]
+        },
+        "icons": {
+            "type": "section",
+            "title": "Icons",
+            "keys": ["icon-default", "icon-head-detected", "icon-head-missing"]
         }
     },
     "enable-notifications": {
@@ -18,6 +23,12 @@
         "default": true,
         "description": "Enable notifications",
         "tooltip": "Show system notifications for device events"
+    },
+    "enable-media-control": {
+        "type": "checkbox",
+        "default": true,
+        "description": "Enable media control",
+        "tooltip": "Automatically Play/Pause media when headset is put on or taken off"
     },
     "critical-battery-level": {
         "type": "spinbutton",
@@ -28,5 +39,23 @@
         "units": "%",
         "description": "Critically low battery",
         "tooltip": "Battery level percentage to trigger critical warning"
+    },
+    "icon-default": {
+        "type": "iconfilechooser",
+        "default": "audio-headset",
+        "description": "Default Icon",
+        "tooltip": "Icon name to use when device is connected"
+    },
+    "icon-head-detected": {
+        "type": "iconfilechooser",
+        "default": "audio-headset-symbolic",
+        "description": "Head Detected Icon",
+        "tooltip": "Icon name to use when headset is on head"
+    },
+    "icon-head-missing": {
+        "type": "iconfilechooser",
+        "default": "audio-headphones-symbolic",
+        "description": "Head Missing Icon",
+        "tooltip": "Icon name to use when headset is off head"
     }
 }

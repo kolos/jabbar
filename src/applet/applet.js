@@ -24,12 +24,18 @@ class JabraApplet extends Applet.IconApplet {
     constructor(metadata, orientation, panel_height, instance_id) {
         super(orientation, panel_height, instance_id);
 
-        this.set_applet_icon_name("audio-headset");
         this.set_applet_tooltip("JabBar");
 
         this.settings = new Settings.AppletSettings(this, uuid, instance_id);
         this.settings.bind("enable-notifications", "enableNotifications");
+        this.settings.bind("enable-media-control", "enableMediaControl");
         this.settings.bind("critical-battery-level", "criticalBatteryLevel");
+        this.settings.bind("icon-default", "iconDefault");
+        this.settings.bind("icon-head-detected", "iconHeadDetected");
+        this.settings.bind("icon-head-missing", "iconHeadMissing");
+
+        // Set initial icon from settings
+        this.set_applet_icon_name(this.iconDefault);
 
         if (JabBar) {
             try {
@@ -65,11 +71,15 @@ class JabraApplet extends Applet.IconApplet {
 
                 this.manager.connect('head-status-changed', (manager, id, detected) => {
                     if (detected) {
-                        this.set_applet_icon_name("audio-headset");
-                        this.controlMedia("Play");
+                        this.set_applet_icon_name(this.iconHeadDetected);
+                        if (this.enableMediaControl) {
+                            this.controlMedia("Play");
+                        }
                     } else {
-                        this.set_applet_icon_name("audio-headset-symbolic");
-                        this.controlMedia("Pause");
+                        this.set_applet_icon_name(this.iconHeadMissing);
+                        if (this.enableMediaControl) {
+                            this.controlMedia("Pause");
+                        }
                     }
                 });
 
