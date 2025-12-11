@@ -1,44 +1,13 @@
-# Compiler and flags
-CC := gcc
-#CFLAGS := -Wall -Wextra -std=c99 -Iinclude
-CFLAGS := -Wextra -Iinclude
-CFLAGS += $(shell pkg-config --cflags dbus-1)
+all:
+	$(MAKE) -C src/wrapper
+	cp src/wrapper/libjabbar-gobject.so src/applet/
+	cp src/wrapper/JabBar-1.0.typelib src/applet/
+	cp lib/libjabra.so.1.12.2.0 src/applet/libjabra.so
+	ln -sf libjabra.so src/applet/libjabra.so.1
+	patchelf --set-rpath '$$ORIGIN' src/applet/libjabbar-gobject.so
 
-# Directories
-SRC_DIR := src
-OBJ_DIR := build
-LIB_DIR := libs
-
-# Target executable
-TARGET := bin/jabra
-
-# Source and object files
-SRCS := $(wildcard $(SRC_DIR)/*.c)
-OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-
-# Libraries to link
-LDFLAGS := -L$(LIB_DIR) -ljabra
-LDFLAGS += $(shell pkg-config --libs dbus-1)
-
-# Default target
-all: $(TARGET)
-
-# Link the executable
-$(TARGET): $(OBJS)
-	@mkdir -p $(dir $@)
-	@echo "Linking $@..."
-	$(CC) $(OBJS) -o $@ $(LDFLAGS) -Wl,-rpath,$(LIB_DIR)
-
-# Compile source files into object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean build artifacts
 clean:
-	@echo "Cleaning..."
-	rm -rf $(OBJ_DIR) $(TARGET)
+	$(MAKE) -C src/wrapper clean
+	rm -f src/applet/*.so* src/applet/*.typelib
 
-# Phony targets
 .PHONY: all clean

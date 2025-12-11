@@ -1,3 +1,17 @@
+# System and IDE
 .vscode/
+.DS_Store
+
+# Build artifacts
 build/
 bin/
+*.o
+
+# Generated binaries and introspection
+*.so
+*.so.*
+*.gir
+*.typelib
+
+# Exceptions (Keep the SDK libraries)
+!lib/libjabra.so*

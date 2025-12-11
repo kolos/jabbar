@@ -1,0 +1,7 @@
+{
+    "uuid": "jabbar@kolos",
+    "name": "JabBar",
+    "description": "JabBar: taskbar buddy for your Jabra headset",
+    "version": "1.0",
+    "icon": "audio-headset"
+}
